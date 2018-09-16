@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2018-09-16T21:36:47</date>
+  <millis>1537123007100</millis>
+  <sequence>0</sequence>
+  <logger>Main</logger>
+  <level>WARNING</level>
+  <class>Main</class>
+  <method>processAddMoney</method>
+  <thread>1</thread>
+  <message>Произошло замятие</message>
+  <exception>
+    <message>ru.kuznetsov.exceptions.CrumpledMoney: Произошло замятие 1.0</message>
+    <frame>
+      <class>Main</class>
+      <method>processAddMoney</method>
+      <line>61</line>
+    </frame>
+    <frame>
+      <class>Main</class>
+      <method>main</method>
+      <line>32</line>
+    </frame>
+  </exception>
+</record>

@@ -2,12 +2,20 @@ import ru.kuznetsov.VendingMachine;
 import ru.kuznetsov.drinks.DrinkType;
 import ru.kuznetsov.exceptions.CrumpledMoney;
 
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.*;
 
 public class Main {
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
     private static VendingMachine vm = new VendingMachine();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        LogManager.getLogManager().readConfiguration();
+        Handler fileHandler = new FileHandler();
+        logger.addHandler(fileHandler);
+        logger.setUseParentHandlers(false);
+
 
         System.out.println("Наши напитки: ");
         for (String line : vm.getDrinkTypes()) {
@@ -50,6 +58,7 @@ public class Main {
             System.out.println("Текущий баланс: " + vm.addMoney(money));
         } catch (CrumpledMoney crumpledMoney) {
             System.err.println(crumpledMoney.getMessage());
+            logger.log(Level.WARNING,"Произошло замятие",crumpledMoney.fillInStackTrace());
         }
     }
 

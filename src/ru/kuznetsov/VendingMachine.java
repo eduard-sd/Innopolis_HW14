@@ -9,10 +9,14 @@ import ru.kuznetsov.exceptions.NoMoneyException;
 import ru.kuznetsov.exceptions.NoSuchButtonException;
 import ru.kuznetsov.exceptions.QuantityException;
 
+import java.util.logging.*;
+
 /**
  * Торговый автомат
  */
 public class VendingMachine {
+    private static final Logger loggerVM = Logger.getLogger(VendingMachine.class.getName());
+
     private double money = 0;
     private Product[] drinks = new Product[]{
             new Product(ColdDrinkType.COCA, 10),
@@ -63,6 +67,7 @@ public class VendingMachine {
             }
         }catch (NoSuchButtonException e){
             System.err.println(e.getMessage());
+            loggerVM.log(Level.WARNING,"Неправильный код товара",e.fillInStackTrace());
             return null;
         }
         Product selected = drinks[key];
@@ -73,6 +78,7 @@ public class VendingMachine {
             }
         } catch (NoMoneyException e) {
             System.err.println(e.getMessage());
+            loggerVM.log(Level.WARNING,"Нехватает денег",e.fillInStackTrace());
             return null;
         }
 
@@ -81,6 +87,7 @@ public class VendingMachine {
             drink = selected.take();
         } catch (QuantityException e) {
             System.err.println(e.getMessage());
+            loggerVM.log(Level.WARNING,"Такой напиток закончился",e.fillInStackTrace());
             return null;
         }
         money -= drink.getPrice();
