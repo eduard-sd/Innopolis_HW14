@@ -37,7 +37,7 @@ public class VendingMachine {
      */
     public double addMoney(double money) throws CrumpledMoney {
         double a = Math.random();
-        if (a <= 0.1){
+        if (a <= 0.2){
             this.money += 0;
             throw new CrumpledMoney("Произошло замятие "+money);
 

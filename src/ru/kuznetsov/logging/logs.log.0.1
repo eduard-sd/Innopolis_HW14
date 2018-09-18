@@ -1,27 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE log SYSTEM "logger.dtd">
-<log>
-<record>
-  <date>2018-09-16T21:18:07</date>
-  <millis>1537121887963</millis>
-  <sequence>0</sequence>
-  <logger>Main</logger>
-  <level>WARNING</level>
-  <class>Main</class>
-  <method>processAddMoney</method>
-  <thread>1</thread>
-  <message>Произошло замятие</message>
-  <exception>
-    <message>ru.kuznetsov.exceptions.CrumpledMoney: Произошло замятие 2.0</message>
-    <frame>
-      <class>Main</class>
-      <method>processAddMoney</method>
-      <line>64</line>
-    </frame>
-    <frame>
-      <class>Main</class>
-      <method>main</method>
-      <line>35</line>
-    </frame>
-  </exception>
-</record>
+сен 18, 2018 11:51:45 PM ru.kuznetsov.VendingMachine giveMeADrink
+WARNING: Такой напиток закончился
+ru.kuznetsov.exceptions.QuantityException: Такой напиток закончился
+	at ru.kuznetsov.VendingMachine.giveMeADrink(VendingMachine.java:90)
+	at Main.processGetDrink(Main.java:74)
+	at Main.main(Main.java:40)
+
+сен 18, 2018 11:51:55 PM ru.kuznetsov.VendingMachine giveMeADrink
+WARNING: Нехватает денег
+ru.kuznetsov.exceptions.NoMoneyException: Нехватает денег
+	at ru.kuznetsov.VendingMachine.giveMeADrink(VendingMachine.java:81)
+	at Main.processGetDrink(Main.java:74)
+	at Main.main(Main.java:40)
+

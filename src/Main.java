@@ -10,12 +10,12 @@ public class Main {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
     private static VendingMachine vm = new VendingMachine();
 
+
     public static void main(String[] args) throws IOException {
         LogManager.getLogManager().readConfiguration();
         Handler fileHandler = new FileHandler();
         logger.addHandler(fileHandler);
-        logger.setUseParentHandlers(false);
-
+        logger.setUseParentHandlers(false); // как поменять у вейдинг машины настройки по умолчанию? и почему так много файлов создается при логировании?
 
         System.out.println("Наши напитки: ");
         for (String line : vm.getDrinkTypes()) {
