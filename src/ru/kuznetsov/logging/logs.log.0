@@ -1,4 +1,10 @@
-сен 18, 2018 11:51:36 PM Main processAddMoney
+сен 22, 2018 4:32:06 PM Main processAddMoney
+WARNING: Произошло замятие
+ru.kuznetsov.exceptions.CrumpledMoney: Произошло замятие 1.0
+	at Main.processAddMoney(Main.java:64)
+	at Main.main(Main.java:35)
+
+сен 22, 2018 4:32:08 PM Main processAddMoney
 WARNING: Произошло замятие
 ru.kuznetsov.exceptions.CrumpledMoney: Произошло замятие 1.0
 	at Main.processAddMoney(Main.java:64)

@@ -15,7 +15,7 @@ import java.util.logging.*;
  * Торговый автомат
  */
 public class VendingMachine {
-    private static final Logger loggerVM = Logger.getLogger(VendingMachine.class.getName());
+    private static final Logger LOGER_VM = Logger.getLogger(VendingMachine.class.getName());
 
     private double money = 0;
     private Product[] drinks = new Product[]{
@@ -37,59 +37,48 @@ public class VendingMachine {
      */
     public double addMoney(double money) throws CrumpledMoney {
         double a = Math.random();
-        if (a <= 0.2){
-            this.money += 0;
-            throw new CrumpledMoney("Произошло замятие "+money);
+        if (a <= 0.2) {
+            throw new CrumpledMoney("Произошло замятие " + money);
 
-        } else{
+        } else {
             this.money += money;
             return this.money;
         }
-        // TODO: имитировать замятие купюры - ok
-        // TODO: сумму замятых купюр сохранить в исключении - ok
-        // TODO: ошибка должна обрабатываться на уровне пользователя (в классе Main) - ok
     }
 
     /**
      * Получает из автомата выбранный напиток
-     *
+     * <p>
      * В методе есть проверка корректности кода напитка, проверка остатков данного продукта
      * и достаточно ли денег чтобы его купить. В случае ошибок выбрасывать соответствующее исключение
      *
      * @param key код продукта
      * @return напиток;
      */
-    public DrinkType giveMeADrink(int key)  {
-        try {
-            if (!isKeyValid(key)) {
-                // TODO: возвращать соответствующую ошибку - ok
-                // Неправильный код товара - товар не возвращается
-            }
-        }catch (NoSuchButtonException e){
-            System.err.println(e.getMessage());
-            loggerVM.log(Level.WARNING,"Неправильный код товара",e.fillInStackTrace());
-            return null;
-        }
-        Product selected = drinks[key];
-        try {
-            if(!isMoneyEnough(selected));{
-                // TODO: возвращать соответствующую ошибку - ok
-                // Нехватает денег - товар не возвращается
-            }
-        } catch (NoMoneyException e) {
-            System.err.println(e.getMessage());
-            loggerVM.log(Level.WARNING,"Нехватает денег",e.fillInStackTrace());
-            return null;
+    public DrinkType giveMeADrink(int key) throws NoSuchButtonException, NoMoneyException, QuantityException {
+        if (!isKeyValid(key)) {
+            LOGER_VM.log(Level.WARNING, "Неправильный код товара");
+            // Неправильный код товара - товар не возвращается
+            throw new NoSuchButtonException("Неправильный код товара");
         }
 
-        DrinkType drink = null;
-        try {
-            drink = selected.take();
-        } catch (QuantityException e) {
-            System.err.println(e.getMessage());
-            loggerVM.log(Level.WARNING,"Такой напиток закончился",e.fillInStackTrace());
-            return null;
+
+        Product selected = drinks[key];
+
+        if (!isMoneyEnough(selected)) {
+            LOGER_VM.log(Level.WARNING, "Нехватает денег");
+            // Нехватает денег - товар не возвращается
+            throw new NoMoneyException("Нехватает денег");
         }
+
+
+        DrinkType drink = null;
+        if (selected.getQuantityInfo() < 1) {
+            LOGER_VM.log(Level.WARNING, "Такой напиток закончился");
+            throw new QuantityException("Такой напиток закончился");
+        }
+
+        drink = selected.take();
         money -= drink.getPrice();
         return drink;
     }
@@ -102,7 +91,7 @@ public class VendingMachine {
     public String[] getDrinkTypes() {
         String[] result = new String[drinks.length];
         for (int i = 0; i < drinks.length; i++) {
-            result[i] = String.format("%d - %12s: %6.2f руб", i, drinks[i].getName(),drinks[i].getPrice());
+            result[i] = String.format("%d - %12s: %6.2f руб", i, drinks[i].getName(), drinks[i].getPrice());
         }
         return result;
     }
@@ -113,12 +102,8 @@ public class VendingMachine {
      * @param selected - выбранный напиток
      * @return true если денег хватает, иначе - false
      */
-    private boolean isMoneyEnough(Product selected) throws NoMoneyException{
-        if (money >= selected.getPrice()){
-            return true;
-        }else {
-            throw new NoMoneyException("Нехватает денег");
-        }
+    private boolean isMoneyEnough(Product selected) {
+        return money >= selected.getPrice();
     }
 
     /**
@@ -128,12 +113,8 @@ public class VendingMachine {
      * @param key номер напитка
      * @return true если есть напиток с таким номером, иначе false
      */
-    private boolean isKeyValid(int key) throws NoSuchButtonException {
-        if ((key >= 0 && key < drinks.length)) {
-            return true;
-        }else {
-            throw new NoSuchButtonException("Неправильный код товара");
-        }
+    private boolean isKeyValid(int key) {
+        return (key >= 0 && key < drinks.length);
     }
 
     /**

@@ -1,10 +1,8 @@
 package ru.kuznetsov.drinks;
 
-import ru.kuznetsov.exceptions.QuantityException;
-
 /**
  * Класс-обертка "Информация по товару"
- *
+ * <p>
  * Добавляет к типу товара дополнительное поле: количество
  */
 public class Product {
@@ -22,20 +20,19 @@ public class Product {
      *
      * @return тип напитка
      */
-    public DrinkType take() throws QuantityException {
-        // TODO: сделать проверку что товар не кончился - ok
-        if (quantity > 0) {
-            quantity--;
-            return drinkType;
-        } else {
-            throw new QuantityException("Такой напиток закончился");
-        }
-
-
+    public DrinkType take() {
+        quantity--;
+        return drinkType;
     }
+    public int getQuantityInfo() {
+        return quantity;
+    }
+
+
     public String getName() {
         return drinkType.getName();
     }
+
     public double getPrice() {
         return drinkType.getPrice();
     }
